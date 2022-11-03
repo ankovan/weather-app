@@ -30,6 +30,7 @@ const city = ref("Moscow")
 const weatherdata = ref({})
 const {weatherDescription} = useWeather();
 onMounted(() => {
+  city.value = localStorage.getItem("city") || "Moscow";
   getWeather();
   console.log(weatherdata.value)
 });
@@ -40,6 +41,7 @@ const getWeather = async () => {
     );
     weatherdata.value = response.data;
     weatherDescription.value = weatherdata.value?.weather?.[0]?.main;
+    localStorage.setItem("city", city.value);
   } catch (error) {
     console.log(error);
   }
